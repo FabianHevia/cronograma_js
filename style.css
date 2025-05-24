@@ -1,0 +1,95 @@
+/* Estilo general */
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Contenedor principal de letras e identificadores */
+.letra-contenedor {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las columnas se organicen horizontalmente */
+  gap: 5px; /* Espacio entre letras e identificadores */
+}
+
+/* Inputs para letras */
+input.letra-input {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  margin: 2px;
+  font-size: 16px;
+  border: none; /* Oculta todos los bordes */
+  border-bottom: 1px solid white; /* Solo muestra el borde inferior */
+  background-color: transparent; /* Fondo transparente */
+  color: white;
+  text-transform: lowercase;
+}
+
+input.letra-input[readonly] {
+  background-color: #2c2c2c;
+  color: green;
+  font-weight: bold;
+}
+
+/* Caracteres especiales (comas, puntos, etc.) */
+.caracter-especial {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px; /* Alinea verticalmente el texto */
+  border-bottom: 1px solid white; /* Borde inferior para alinear con los inputs */
+  color: white;
+}
+
+/* Identificadores numéricos */
+.identificador {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: gray;
+  margin-top: 5px; /* Espacio entre letra e identificador */
+}
+
+/* Panel de autocompletado */
+#autocompletar span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+#autocompletar span.disponible {
+  background-color: white;
+  color: black;
+}
+
+#autocompletar span.revelado {
+  background-color: green;
+  color: white;
+}
+
+#autocompletar span.parpardear {
+  animation: parpadear 1s infinite;
+  background-color: red;
+  color: white;
+}
+
+@keyframes parpadear {
+  0% { background-color: red; }
+  50% { background-color: white; }
+  100% { background-color: red; }
+}
+
+.contador {
+  float: right;
+  color: red;
+  font-weight: bold;
+}

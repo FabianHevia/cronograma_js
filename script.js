@@ -4,6 +4,8 @@ let letrasReveladas = [];
 let maxErrores = 0;
 let errores = 0;
 
+let juegoIniciado = false;
+
 // Mapeo de identificador -> letra
 let mapaIdentificadorLetra = {};
 let mapaLetraIdentificador = {};
@@ -48,6 +50,7 @@ function iniciarJuego() {
       document.getElementById("juego").classList.remove("oculto");
     }
   });
+  juegoIniciado = true;
 }
 
 function asignarIdentificadores() {
@@ -181,6 +184,10 @@ function autocompletarLetra(elemento) {
 }
 
 function validarYGuardar(input) {
+  if (!juegoIniciado) {
+    input.value = ""; // Limpia el campo si aún no empezó
+    return;
+  }
   const indice = parseInt(input.dataset.indice);
   const valor = input.value.toLowerCase();
 
@@ -197,25 +204,28 @@ function validarYGuardar(input) {
   if (valor === letrasOcultas[indice]) {
     letrasReveladas[indice] = true;
     input.readOnly = true;
-    input.style.backgroundColor = "#2c2c2c"; // Cambiar color al completar
+    input.style.backgroundColor = "#2c2c2c";
     input.style.color = "green";
-
     // Actualizar panel de autocompletado
     actualizarPanelAutocompletar();
     verificarVictoria();
   } else {
     errores++;
     input.style.borderColor = "red"; // Resaltar error
+    input.value = ""; // Borrar automáticamente la letra incorrecta
     setTimeout(() => {
       input.style.borderColor = "white"; // Quitar resalto después de 500ms
     }, 500);
-
     actualizarContador();
-    if (errores >= maxErrores) {
+    if (maxErrores > 0 && errores >= maxErrores) {
+      // Mostrar pantalla de GAME OVER
+      document.getElementById("juego").classList.add("oculto");
+      document.getElementById("game-over").classList.remove("oculto");
+
       setTimeout(() => {
-        alert("¡Has perdido!");
         reiniciarJuego();
-      }, 500);
+        document.getElementById("game-over").classList.add("oculto");
+      }, 2000);
     }
   }
 }
@@ -250,6 +260,14 @@ function actualizarContador() {
 }
 
 function reiniciarJuego() {
+  fraseOriginal = "";
+  letrasOcultas = [];
+  letrasReveladas = [];
+  maxErrores = 0;
+  errores = 0;
+  mapaIdentificadorLetra = {};
+  mapaLetraIdentificador = {};
+
   document.getElementById("juego").classList.add("oculto");
   document.getElementById("menu").classList.remove("oculto");
 }
